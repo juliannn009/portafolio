@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Portafolio | Desarrollador Full Stack</title>
+  <!-- CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap');
+    .dev-toolbar {
+  display: none !important;
+}
+
+
+    .spotify-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 1000; /* para asegurarte de que quede por encima de otros elementos */
+      border-radius: 12px;}
+
+    
+    /* Estilos para los hexágonos flotantes */
+.hexagons-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-hex {
+  position: absolute;
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+    
+    :root {
+      --neon-blue: #3b82f6;
+      --neon-purple: #8b5cf6;
+      --neon-pink: #ec4899;
+      --neon-cyan: #06b6d4;
+      --neon-green: #10b981;
+    }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #0F172A;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .neon-text {
+      text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+      animation: flickerAnimation 5s infinite;
+    }
+    
+    .neon-text-purple {
+      text-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+      animation: flickerAnimation 7s infinite;
+    }
+    
+    .neon-text-pink {
+      text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+      animation: flickerAnimation 6s infinite;
+    }
+    
+    .neon-border {
+      box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+      animation: borderPulse 4s infinite alternate;
+    }
+    
+    .neon-border-purple {
+      box-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+      animation: borderPulse 6s infinite alternate;
+    }
+    
+    .neon-border-pink {
+      box-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+      animation: borderPulse 5s infinite alternate;
+    }
+    
+    @keyframes flickerAnimation {
+      0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+      }
+      20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.8;
+      }
+    }
+    
+    @keyframes borderPulse {
+      0% {
+        box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+      }
+      50% {
+        box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+      }
+      100% {
+        box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+      }
+    }
+    
+    .glow {
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+    
+    .gradient-border {
+      position: relative;
+    }
+    
+    .gradient-border::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 2px solid transparent;
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899) border-box;
+      border-radius: inherit;
+      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 0 30px rgba(59, 130, 246, 0.2);
+    }
+    
+    .skill-bubble {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(5px);
+    }
+    
+    .skill-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+    
+    .animated-bg {
+      background: linear-gradient(-45deg, #0F172A, #1E293B, #334155);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .animated-border {
+      position: relative;
+    }
+    
+    .animated-border::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6) border-box;
+      background-size: 300% 300%;
+      animation: border-animation 8s linear infinite;
+      border-radius: inherit;
+      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    
+    @keyframes border-animation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .terminal-text::after {
+      content: '|';
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      from, to {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    
+    .slide-in {
+      animation: slideInAnimation 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes slideInAnimation {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    .rotate-icon {
+      animation: rotate 10s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 2s linear infinite;
+      background: rgba(59, 130, 246, 0.2);
+    }
+    
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
+    /* Matrix effect */
+    .matrix-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.05;
+      overflow: hidden;
+    }
+    
+    .matrix-column {
+      position: absolute;
+      top: -100%;
+      color: #0f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.2rem;
+      white-space: nowrap;
+      animation: matrix-fall 20s linear infinite;
+      opacity: 0.5;
+    }
+    
+    @keyframes matrix-fall {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+    
+    /* Neon cursor effect */
+    .neon-cursor {
+      pointer-events: none;
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid var(--neon-blue);
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: width 0.2s, height 0.2s;
+      box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    }
+    
+    /* Tech stack card styles */
+    .tech-stack {
+      perspective: 1000px;
+    }
+    
+    .tech-card {
+      transition: all 0.5s ease;
+      transform-style: preserve-3d;
+    }
+    
+    .tech-stack:hover .tech-card {
+  transform: rotateY(180deg);
+}
+    
+    .tech-card-front, .tech-card-back {
+      backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .tech-card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    }
+    
+    /* Timeline style */
+    .timeline-container {
+      position: relative;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding: 20px;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--neon-blue);
+      box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    }
+    
+    /* Loading spinner with neon effect */
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(59, 130, 246, 0.1);
+      border-left-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Cyberpunk scanner effect */
+    .scanner-effect {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+                                 rgba(59, 130, 246, 0) 0%, 
+                                 rgba(59, 130, 246, 0.2) 50%, 
+                                 rgba(59, 130, 246, 0) 100%);
+      animation: scan 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="text-gray-200">
+  <!-- Neon cursor effect -->
+  
+  <!-- Partículas de fondo -->
+  <div id="particles-js"></div>
+  
+  <!-- Matrix effect -->
+  <div class="matrix-effect"></div>
+  <!-- Añadir después del div matrix-effect -->
+<div class="hexagons-container">
+  <!-- Hexágono 1 -->
+  <div class="floating-hex" style="top: 15%; left: 10%; animation-delay: 0s;">
+    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2"/>
+    </svg>
+  </div>
+  <!-- Hexágono 2 -->
+  <div class="floating-hex" style="top: 75%; left: 85%; animation-delay: 1.5s;">
+    <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(139, 92, 246, 0.1)" stroke="#8b5cf6" stroke-width="2"/>
+    </svg>
+  </div>
+  <!-- Hexágono 3 -->
+  <div class="floating-hex" style="top: 30%; left: 85%; animation-delay: 2.3s;">
+    <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(236, 72, 153, 0.1)" stroke="#ec4899" stroke-width="2"/>
+    </svg>
+  </div>
+  <!-- Hexágono 4 -->
+  <div class="floating-hex" style="top: 80%; left: 25%; animation-delay: 3.1s;">
+    <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2"/>
+    </svg>
+  </div>
+  <!-- Hexágono 5 -->
+  <div class="floating-hex" style="top: 40%; left: 5%; animation-delay: 1.8s;">
+    <svg width="55" height="55" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(139, 92, 246, 0.1)" stroke="#8b5cf6" stroke-width="2"/>
+    </svg>
+  </div>
+</div>
+  
+  <!-- Navegación -->
+  <nav class="sticky top-0 bg-slate-900/80 backdrop-blur-lg z-50 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <div class="code-font font-bold text-2xl neon-text">&lt;<span class="neon-text-pink">Julian</span>&gt;</div>
+    </div>
+    <div class="hidden md:flex space-x-6">
+      <a href="#inicio" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        Start
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#sobre-mi" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        About me
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#habilidades" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        Skills
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#proyectos" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        projects
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#experiencia" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        Experience
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#contacto" class="hover:text-blue-400 transition-colors duration-300 relative group">
+        Contact
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </div>
+    <div class="md:hidden">
+      <button class="text-white focus:outline-none" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Menú móvil -->
+  <div class="hidden md:hidden bg-slate-800/90 backdrop-blur-lg p-4 absolute w-full z-40" id="mobile-menu">
+    <div class="flex flex-col space-y-3">
+      <a href="#inicio" class="hover:text-blue-400 transition-colors duration-300 p-2 border-b border-slate-700">Inicio</a>
+      <a href="#sobre-mi" class="hover:text-blue-400 transition-colors duration-300 p-2 border-b border-slate-700">Sobre mí</a>
+      <a href="#habilidades" class="hover:text-blue-400 transition-colors duration-300 p-2 border-b border-slate-700">Habilidades</a>
+      <a href="#proyectos" class="hover:text-blue-400 transition-colors duration-300 p-2 border-b border-slate-700">Proyectos</a>
+      <a href="#experiencia" class="hover:text-blue-400 transition-colors duration-300 p-2 border-b border-slate-700">Experiencia</a>
+      <a href="#contacto" class="hover:text-blue-400 transition-colors duration-300 p-2">Contacto</a>
+    </div>
+  </div>
+  
+  <!-- Sección de Inicio -->
+  <section id="inicio" class="min-h-screen flex items-center justify-center relative px-6 py-20">
+    <div class="scanner-effect"></div>
+    <div class="max-w-6xl mx-auto text-center z-10">
+      <div class="mb-8 inline-block">
+        <div class="code-font font-bold text-5xl md:text-7xl mb-2">
+          <span class="text-blue-500 neon-text">&lt;</span>
+          <span id="typed-intro" class="text-white"></span>
+          <span class="text-blue-500 neon-text">Hello, I'm Julian Rivera&gt;</span>
+        </div>
+      </div>
+      
+      <h2 class="text-xl md:text-2xl mb-8 text-gray-400 max-w-3xl mx-auto">
+        I am a <span class="text-blue-400 neon-text">front-end developer</span>
+        I hope we can work
+      </h2>
+      
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a href="#proyectos" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
+          <span class="relative z-10">See projects</span>
+          <span class="absolute top-0 left-0 w-full h-0 bg-purple-600 transition-all duration-300 group-hover:h-full -z-0"></span>
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div class="absolute top-0 left-1/4 w-12 h-12 ripple"></div>
+            <div class="absolute top-0 left-2/4 w-12 h-12 ripple" style="animation-delay: 0.5s"></div>
+            <div class="absolute top-0 left-3/4 w-12 h-12 ripple" style="animation-delay: 1s"></div>
+          </div>
+        </a>
+        <a href="../../public/cv ingles.pdf" download class="bg-transparent border border-blue-500 text-blue-400 hover:bg-blue-900/30 px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-border">
+          Download CV <i class=""></i>
+        </a>
+        
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+        <div class="p-4 bg-slate-800/60 backdrop-blur rounded-lg text-center animated-border transform-gpu hover:scale-105 transition-all duration-300">
+          <div class="text-blue-400 mb-2">
+            <i class="fas fa-clock text-xl"></i>
+          </div>
+          <h3 class="text-3xl font-bold text-blue-400 counter" data-target="4">0</h3>
+          <p class="text-gray-400">Years of experience</p>
+        </div>
+        <div class="p-4 bg-slate-800/60 backdrop-blur rounded-lg text-center animated-border transform-gpu hover:scale-105 transition-all duration-300">
+          <div class="text-purple-400 mb-2">
+            <i class="fas fa-laptop-code text-xl"></i>
+          </div>
+          <h3 class="text-3xl font-bold text-purple-400 counter" data-target="50">3</h3>
+          <p class="text-gray-400">completed projects</p>
+        </div>
+        <div class="p-4 bg-slate-800/60 backdrop-blur rounded-lg text-center animated-border transform-gpu hover:scale-105 transition-all duration-300">
+          <div class="text-pink-400 mb-2">
+            <i class="fas fa-code text-xl"></i>
+          </div>
+          <h3 class="text-3xl font-bold text-pink-400 counter" data-target="15">8</h3>
+          <p class="text-gray-400">mastered technologies</p>
+        </div>
+        <div class="p-4 bg-slate-800/60 backdrop-blur rounded-lg text-center animated-border transform-gpu hover:scale-105 transition-all duration-300">
+          <div class="text-green-400 mb-2">
+            <i class="fas fa-smile-beam text-xl"></i>
+          </div>
+          <h3 class="text-3xl font-bold text-green-400 counter" data-target="98">3</h3>
+          <p class="text-gray-400">satisfied customers</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- Sección Sobre mí -->
+  <section id="sobre-mi" class="py-20 px-6 bg-slate-900/50 backdrop-blur">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+        <span class="code-font text-blue-500 neon-text">&lt;</span>
+        <span class="text-white">about me</span>
+        <span class="code-font text-blue-500 neon-text">/&gt;</span>
+      </h2>
+      
+      <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+      
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <div class="mb-6">
+            <div class="flex items-center mb-4">
+              <div class="w-1 h-6 bg-blue-500 rounded-full mr-3"></div>
+              <h3 class="text-2xl font-semibold">Who am I?</h3>
+            </div>
+            <p class="text-gray-300 mb-4">
+              I'm someone who really enjoys working with others and being part of a team. I stay calm and focused even in high-pressure situations, and I’m always looking for opportunities to learn and grow. I believe that a positive attitude and good communication make a big difference, so I try to bring that energy into everything I do. I love collaborating, sharing ideas, and building great things together.            </p>
+            <p class="text-gray-300">
+              I'm a curious and motivated person who loves building meaningful things and connecting with others through creative work.            </p>
+          </div>
+          
+          <div class="mb-6">
+            <div class="flex items-center mb-4">
+              <div class="w-1 h-6 bg-purple-500 rounded-full mr-3"></div>
+              <h3 class="text-2xl font-semibold">my philosophy</h3>
+            </div>
+            <p class="text-gray-300">
+              I believe that growth comes from curiosity, collaboration, and consistency. Every project is an opportunity to learn something new, to connect with others, and to turn ideas into something meaningful. I approach my work with passion, an open mind, and the belief that creativity and effort—when shared—can make a real impact.            </p>
+          </div>
+          
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+            <div class="bg-slate-800/80 backdrop-blur p-4 rounded-lg text-center hover:bg-slate-700/80 transition-all duration-300 transform hover:scale-105">
+              <div class="text-blue-400 mb-2">
+                <i class="fas fa-laptop-code text-2xl"></i>
+              </div>
+              <h4 class="font-medium">web development</h4>
+            </div>
+           
+            <div class="bg-slate-800/80 backdrop-blur p-4 rounded-lg text-center hover:bg-slate-700/80 transition-all duration-300 transform hover:scale-105">
+              <div class="text-pink-400 mb-2">
+                <i class="fas fa-tachometer-alt text-2xl"></i>
+              </div>
+              <h4 class="font-medium">optimization</h4>
+            </div>
+            <div class="bg-slate-800/80 backdrop-blur p-4 rounded-lg text-center hover:bg-slate-700/80 transition-all duration-300 transform hover:scale-105">
+              <div class="text-green-400 mb-2">
+                <i class="fas fa-server text-2xl"></i>
+              </div>
+              <h4 class="font-medium">DevOps</h4>
+            </div>
+            <div class="bg-slate-800/80 backdrop-blur p-4 rounded-lg text-center hover:bg-slate-700/80 transition-all duration-300 transform hover:scale-105">
+              <div class="text-yellow-400 mb-2">
+                <i class="fas fa-shield-alt text-2xl"></i>
+              </div>
+              <h4 class="font-medium">cybersecurity</h4>
+            </div>
+            <div class="bg-slate-800/80 backdrop-blur p-4 rounded-lg text-center hover:bg-slate-700/80 transition-all duration-300 transform hover:scale-105">
+              <div class="text-red-400 mb-2">
+                <i class="fas fa-chart-bar text-2xl"></i>
+              </div>
+              <h4 class="font-medium">analysis</h4>
+            </div>
+          </div>
+        </div>
+        
+        <div class="order-1 md:order-2 relative">
+          <div class="relative z-10 overflow-hidden rounded-2xl shadow-xl bg-slate-800/50 backdrop-blur p-1 neon-border">
+			<div class="aspect-square rounded-xl overflow-hidden relative">
+				<img src="https://media1.tenor.com/m/pqckQpWm9DIAAAAC/typing-code.gif" alt="Foto de perfil" class="w-full h-full object-cover" />
+				<div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
+				<div class="scanner-effect"></div>
+				
+			
+			<div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
+			<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
+			
+			<!-- Hexágonos animados -->
+			<div class="absolute -right-8 top-1/2 transform -translate-y-1/2 pointer-events-none">
+			  <div class="floating" style="animation-delay: 0s;">
+				<svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+				  <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" stroke-width="2"/>
+				</svg>
+			  </div>
+			</div>
+			
+			<div class="absolute -left-8 bottom-1/4 pointer-events-none">
+			  <div class="floating" style="animation-delay: 0.5s;">
+				<svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+				  <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="rgba(139, 92, 246, 0.1)" stroke="#8b5cf6" stroke-width="2"/>
+				</svg>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</section>
+
+  
+	
+	<!-- Sección de Habilidades -->
+	<section id="habilidades" class="py-20 px-6">
+	  <div class="max-w-6xl mx-auto">
+		<h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+		  <span class="code-font text-blue-500 neon-text">&lt;</span>
+		  <span class="text-white">skills</span>
+		  <span class="code-font text-blue-500 neon-text">/&gt;</span>
+		</h2>
+		
+		<div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+		
+		<div class="mb-12">
+		  <h3 class="text-2xl font-bold mb-6 text-center">front-end technologies</h3>
+		  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-html5 text-4xl text-orange-500 mb-3"></i>
+					<h4 class="font-medium">HTML5</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">100%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-css3-alt text-4xl text-blue-500 mb-3"></i>
+					<h4 class="font-medium">CSS3</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">100%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-js text-4xl text-yellow-400 mb-3"></i>
+					<h4 class="font-medium">JavaScript</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">80%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-react text-4xl text-blue-400 mb-3 rotate-icon"></i>
+					<h4 class="font-medium">React</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">85%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+        <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+          <div class="tech-card-front">
+            <div class="text-center flex flex-col items-center justify-center">
+              <!-- Tailwind CSS SVG icon centered -->
+              <svg class="w-10 h-10 text-sky-400 mb-3 block" viewBox="0 0 256 154" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M128 0C94.933 0 74.667 17.067 67.2 51.2c13.867-17.067 29.867-23.467 48-19.2 10.4 2.4 17.867 10.4 25.6 18.133 13.867 13.867 28.267 28.267 58.133 28.267 33.067 0 53.333-17.067 60.8-51.2-13.867 17.067-29.867 23.467-48 19.2-10.4-2.4-17.867-10.4-25.6-18.133C172.267 13.867 157.867 0 128 0zm-60.8 76.8C34.133 76.8 13.867 93.867 6.4 128c13.867-17.067 29.867-23.467 48-19.2 10.4 2.4 17.867 10.4 25.6 18.133C93.867 140.8 108.267 154 138.133 154c33.067 0 53.333-17.067 60.8-51.2-13.867 17.067-29.867 23.467-48 19.2-10.4-2.4-17.867-10.4-25.6-18.133C132.267 89.6 117.867 76.8 97.2 76.8z"/>
+              </svg>
+              <h4 class="font-medium text-white">Tailwind CSS</h4>
+            </div>
+          </div>
+          <div class="tech-card-back">
+            <div class="text-center text-white">
+              <span class="font-bold">85%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+			
+			<div class="tech-stack aspect-square relative">
+        <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border">
+          <div class="tech-card-front">
+            <div class="text-center">
+              <!-- Astro SVG icon -->
+              <svg class="w-10 h-10 text-indigo-500 mb-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 93.8C24.7 93.8 6.2 75.3 6.2 50S24.7 6.2 50 6.2 93.8 24.7 93.8 50 75.3 93.8 50 93.8zM50 14.5c-19.6 0-35.5 15.9-35.5 35.5 0 8.5 3.1 16.3 8.3 22.3 3.1 3.8 7.1 6.8 11.6 9.1 1.3 1.1 2.8 2.1 4.3 3.1 0-0.3 0-0.6 0-0.9V60.3c-1.6-0.3-3.2-0.8-4.7-1.4 2.7 4.1 6.7 7.3 11.5 9.1 0 0 1.6 0.8 3.1 1.1 0.1-0.3 0.3-0.6 0.4-0.9 0-1.4 0-2.8 0-4.2V50c0-7.9 6.4-14.3 14.3-14.3 2.4 0 4.6 0.7 6.5 1.8-0.7-0.8-1.4-1.7-2.2-2.5 0 0.1-0.1 0.2-0.2 0.3 2.3 2.4 4.4 5 6.4 7.7-0.4-0.4-0.7-0.7-1.1-1 0.6 1.5 1 3.1 1.3 4.7 0.6 3.1 0.8 6.3 0.8 9.5-0.1 2.2-0.2 4.4-0.5 6.5 1.2 2.2 2.8 4.2 4.8 5.9-2.2-1.5-4.1-3.3-6-5.3 2.5-3.3 4.5-6.9 6.1-10.6 1.5-3.7 2.3-7.7 2.3-11.9 0.1-19.6-15.8-35.5-35.5-35.5z"/>
+              </svg>
+              <h4 class="font-medium text-white">Astro</h4>
+            </div>
+          </div>
+          <div class="tech-card-back">
+            <div class="text-center text-white">
+              <span class="font-bold">90%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+		  </div>
+		</div>
+		
+		<div class="mb-12">
+		  <h3 class="text-2xl font-bold mb-6 text-center">technologies Backend</h3>
+		  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+			
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border-purple">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-php text-4xl text-indigo-400 mb-3"></i>
+					<h4 class="font-medium">PHP</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">85%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border-purple">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fab fa-python text-4xl text-yellow-300 mb-3"></i>
+					<h4 class="font-medium">Python</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">80%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border-purple">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fas fa-database text-4xl text-blue-400 mb-3"></i>
+					<h4 class="font-medium">SQL</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">88%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="tech-stack aspect-square relative">
+			  <div class="tech-card bg-slate-800/80 backdrop-blur rounded-lg p-4 flex flex-col items-center justify-center h-full neon-border-purple">
+				<div class="tech-card-front">
+				  <div class="text-center">
+					<i class="fas fa-server text-4xl text-green-400 mb-3"></i>
+					<h4 class="font-medium">MongoDB</h4>
+				  </div>
+				</div>
+				<div class="tech-card-back">
+				  <div class="text-center text-white">
+					<span class="font-bold">83%</span>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		
+		<div>
+		  <h3 class="text-2xl font-bold mb-6 text-center">tools and others</h3>
+		  <div class="flex flex-wrap justify-center gap-4">
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fab fa-git-alt text-orange-500 mr-2"></i>
+			  <span>Git</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fab fa-docker text-blue-500 mr-2"></i>
+			  <span>Docker</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fab fa-aws text-yellow-500 mr-2"></i>
+			  <span>AWS</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fab fa-figma text-purple-500 mr-2"></i>
+			  <span>Figma</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fas fa-terminal text-green-400 mr-2"></i>
+			  <span>CLI</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fab fa-jira text-blue-400 mr-2"></i>
+			  <span>Jira</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fas fa-code-branch text-pink-400 mr-2"></i>
+			  <span>CI/CD</span>
+			</div>
+			<div class="skill-bubble bg-slate-800/60 backdrop-blur px-5 py-3 rounded-full flex items-center">
+			  <i class="fas fa-mobile-alt text-indigo-400 mr-2"></i>
+			  <span>Responsive</span>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</section>
+	
+	<!-- Sección de Proyectos -->
+	<section id="proyectos" class="py-20 px-6 bg-slate-900/50 backdrop-blur">
+	  <div class="max-w-6xl mx-auto">
+		<h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+		  <span class="code-font text-blue-500 neon-text">&lt;</span>
+		  <span class="text-white">projects</span>
+		  <span class="code-font text-blue-500 neon-text">/&gt;</span>
+		</h2>
+		
+		<div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+		
+		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+		  <!-- Proyecto 1 -->
+		  <div class="project-card rounded-xl overflow-hidden">
+			<div class="relative group">
+			  <img src="../img/saudade.png" alt="Proyecto 1" class="w-full h-48 object-cover" />
+			  <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+				<div class="p-4 w-full">
+				  <div class="flex justify-around">
+					<a href="#" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fas fa-eye"></i>
+					</a>
+					<a href="#" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fab fa-github"></i>
+					</a>
+				  </div>
+				</div>
+			  </div>
+			  <div class="scanner-effect"></div>
+			</div>
+			<div class="p-5">
+			  <div class="flex justify-between items-center mb-3">
+				<h3 class="text-xl font-bold text-blue-400">clothing store</h3>
+				<div class="code-font text-xs text-gray-400"></div>
+			  </div>
+			  <p class="text-gray-300 mb-4">e-commerce platform for selling clothing</p>
+			  <div class="flex flex-wrap gap-2">
+				<span class="text-xs bg-blue-900/40 text-blue-300 px-2 py-1 rounded">php</span>
+				<span class="text-xs bg-green-900/40 text-green-300 px-2 py-1 rounded">tailwind</span>
+				<span class="text-xs bg-yellow-900/40 text-yellow-300 px-2 py-1 rounded">html</span>
+				<span class="text-xs bg-purple-900/40 text-purple-300 px-2 py-1 rounded">JavaScript</span>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <!-- Proyecto 2 -->
+		  <div class="project-card rounded-xl overflow-hidden">
+			<div class="relative group">
+			  <img src="../../public/img/inv.jpg" alt="Proyecto 2" class="w-full h-48 object-cover" />
+			  <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+				<div class="p-4 w-full">
+				  <div class="flex justify-around">
+					<a href="#" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fas fa-eye"></i>
+					</a>
+					<a href="#" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fab fa-github"></i>
+					</a>
+				  </div>
+				</div>
+			  </div>
+			  <div class="scanner-effect"></div>
+			</div>
+			<div class="p-5">
+			  <div class="flex justify-between items-center mb-3">
+				<h3 class="text-xl font-bold text-purple-400">inventory system</h3>
+				<div class="code-font text-xs text-gray-400"></div>
+			  </div>
+			  <p class="text-gray-300 mb-4">Inventory system for an entity, the system is private but serves to send reports and verification</p>
+			  <div class="flex flex-wrap gap-2">
+				<span class="text-xs bg-blue-900/40 text-blue-300 px-2 py-1 rounded">php</span>
+				<span class="text-xs bg-indigo-900/40 text-indigo-300 px-2 py-1 rounded">Tailwind</span>
+				<span class="text-xs bg-red-900/40 text-red-300 px-2 py-1 rounded">html</span>
+				<span class="text-xs bg-green-900/40 text-green-300 px-2 py-1 rounded">JavaScript</span>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <!-- Proyecto 3 -->
+		  <div class="project-card rounded-xl overflow-hidden">
+			<div class="relative group">
+			  <img src="/public/img/musica.png" alt="Proyecto 3" class="w-full h-48 object-cover" />
+			  <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+				<div class="p-4 w-full">
+				  <div class="flex justify-around">
+					<a href="https://spotify-rose-two.vercel.app/" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fas fa-eye"></i>
+					</a>
+					<a href="#" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+					  <i class="fab fa-github"></i>
+					</a>
+				  </div>
+				</div>
+			  </div>
+			  <div class="scanner-effect"></div>
+			</div>
+			<div class="p-5">
+			  <div class="flex justify-between items-center mb-3">
+				<h3 class="text-xl font-bold text-pink-400">music player</h3>
+				<div class="code-font text-xs text-gray-400"></div>
+			  </div>
+			  <p class="text-gray-300 mb-4">Visually pleasing front end for a music player</p>
+			  <div class="flex flex-wrap gap-2">
+				<span class="text-xs bg-blue-900/40 text-blue-300 px-2 py-1 rounded">React</span>
+				<span class="text-xs bg-purple-900/40 text-purple-300 px-2 py-1 rounded">Tailwind</span>
+				<span class="text-xs bg-green-900/40 text-green-300 px-2 py-1 rounded">html</span>
+				<span class="text-xs bg-yellow-900/40 text-yellow-300 px-2 py-1 rounded">JavaScript</span>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		
+		<div class="text-center mt-12">
+      <a href="https://github.com/juliannn009" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="inline-flex items-center justify-center px-6 py-3 bg-transparent border border-blue-500 text-blue-400 hover:bg-blue-900/30 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-border">
+        Ver más proyectos <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+    
+	</section>
+	
+	<!-- Sección de Experiencia -->
+	<section id="experiencia" class="py-20 px-6">
+	  <div class="max-w-6xl mx-auto">
+		<h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+		  <span class="code-font text-blue-500 neon-text">&lt;</span>
+		  <span class="text-white">experience</span>
+		  <span class="code-font text-blue-500 neon-text">/&gt;</span>
+		</h2>
+		
+		<div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+		
+		<div class="timeline-container relative">
+		  <div class="timeline-line hidden md:block"></div>
+		  
+		  <!-- Experiencia 1 -->
+		  <div class="grid md:grid-cols-2 gap-10 mb-12 relative">
+			<div class="timeline-dot hidden md:block top-8"></div>
+			<div class="md:text-right md:pr-12">
+			  <div class="bg-slate-800/60 backdrop-blur p-6 rounded-lg hover:bg-slate-800/80 transition-all duration-300 border border-blue-500/20 hover:border-blue-500/50">
+				<h3 class="text-xl font-bold text-blue-400 mb-2">front-end developer</h3>
+				<h4 class="text-purple-400 mb-2">SENA</h4>
+				<p class="text-gray-400 mb-2 text-sm">November 2024 - May 2025</p>
+				<p class="text-gray-300">developing applications for inventory management and reporting of the institution</p>
+				<div class="flex flex-wrap gap-2 mt-4 md:justify-end">
+				  <span class="text-xs bg-blue-900/40 text-blue-300 px-2 py-1 rounded">Tailwind</span>
+				  <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">php</span>
+				  <span class="text-xs bg-purple-900/40 text-purple-300 px-2 py-1 rounded">html</span>
+				  <span class="text-xs bg-green-900/40 text-green-300 px-2 py-1 rounded">JavaScript</span>
+				</div>
+			  </div>
+			</div>
+			<div class="hidden md:block"></div>
+		  </div>
+		  
+		 
+    </section>
+
+    <iframe class="spotify-player"
+    src="https://open.spotify.com/embed/track/4PA1wK0leCjmRZlP5dQ8Lv?utm_source=generator"
+    width="300" height="100" frameborder="0"
+    allowfullscreen=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy">
+  </iframe>
+    
+    
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="py-20 px-6 bg-slate-900/50 backdrop-blur">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+          <span class="code-font text-blue-500 neon-text">&lt;</span>
+          <span class="text-white">contact</span>
+          <span class="code-font text-blue-500 neon-text">/&gt;</span>
+        </h2>
+        
+        <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-12 rounded-full"></div>
+        
+        
+          
+          <div>
+            <div class="bg-slate-800/60 backdrop-blur p-8 rounded-lg mb-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
+              <h3 class="text-2xl font-bold mb-6 text-purple-400">contact information</h3>
+              
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="text-blue-400 mr-4 mt-1">
+                    <i class="fas fa-envelope text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium mb-1">Email</h4>
+                    <p class="text-gray-300">julianfra07@gmail.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="text-purple-400 mr-4 mt-1">
+                    <i class="fas fa-phone-alt text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium mb-1">phone</h4>
+                    <p class="text-gray-300">+573144626818</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="text-pink-400 mr-4 mt-1">
+                    <i class="fas fa-map-marker-alt text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium mb-1">location</h4>
+                    <p class="text-gray-300">colombia, bogota</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="text-green-400 mr-4 mt-1">
+                  </div>
+                  
+                </div>
+              </div>
+              
+              <div class="mt-8">
+                <h4 class="font-medium mb-4">follow me on my networks</h4>
+                <div class="flex space-x-4">
+                  
+                  <a href="https://github.com/juliannn009" class="text-white bg-slate-700 hover:bg-slate-600 p-3 rounded-full transition-colors duration-300 transform hover:scale-110"> 
+                    <i class="fab fa-github"></i>
+                  </a>
+                 
+                  <a href="https://www.instagram.com/julian_r21/" class="text-white bg-gradient-to-br from-pink-500 to-purple-700 hover:from-pink-600 hover:to-purple-800 p-3 rounded-full transition-colors duration-300 transform hover:scale-110">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-slate-800/60 backdrop-blur p-6 rounded-lg animated-bg border border-pink-500/20 hover:border-pink-500/50 transition-all duration-300">
+              <div class="flex items-center justify-start space-x-3">
+                <div class="code-font text-blue-400 text-3xl neon-text">&lt;/&gt;</div>
+                <div>
+                  <h4 class="font-medium text-white">ready to work together?</h4>
+                  <p class="text-gray-400 text-sm">¡Contact me and let's make your project a reality!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-10 px-6 border-t border-blue-900/40">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <div class="code-font font-bold text-2xl neon-text mb-2">&lt;<span class="neon-text-pink">Julian</span>&gt;</div>
+            <p class="text-gray-400">front-end developer</p>
+          </div>
+          
+          <div class="text-gray-400 text-center md:text-right">
+            <p>&copy; 2025 all rights reserved</p>
+            <p class="text-sm mt-1">designed and developed with <i class="fas fa-heart text-red-500"></i> and a lot<i class="fas fa-coffee text-yellow-700"></i></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Botón de subir -->
+    <div id="back-to-top" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg cursor-pointer opacity-0 invisible transition-all duration-300 hover:bg-blue-700 z-50">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+      // Inicialización de partículas
+      document.addEventListener('DOMContentLoaded', function() {
+        particlesJS('particles-js', {
+          particles: {
+            number: {
+              value: 80,
+              density: {
+                enable: true,
+                value_area: 800
+              }
+            },
+            color: {
+              value: ['#3b82f6', '#8b5cf6', '#ec4899']
+            },
+            shape: {
+              type: 'circle',
+              stroke: {
+                width: 0,
+                color: '#000000'
+              }
+            },
+            opacity: {
+              value: 0.3,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false
+              }
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 2,
+                size_min: 0.1,
+                sync: false
+              }
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: '#3b82f6',
+              opacity: 0.2,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: 'none',
+              random: true,
+              straight: false,
+              out_mode: 'out',
+              bounce: false,
+              attract: {
+                enable: false,
+                rotateX: 600,
+                rotateY: 1200
+              }
+            }
+          },
+          interactivity: {
+            detect_on: 'canvas',
+            events: {
+              onhover: {
+                enable: true,
+                mode: 'grab'
+              },
+              onclick: {
+                enable: true,
+                mode: 'push'
+              },
+              resize: true
+            },
+            modes: {
+              grab: {
+                distance: 140,
+                line_linked: {
+                  opacity: 0.5
+                }
+              },
+              push: {
+                particles_nb: 4
+              }
+            }
+          },
+          retina_detect: true
+        });
+      });
+      
+ 
+      // Efecto de Matrix
+      document.addEventListener('DOMContentLoaded', function() {
+        const matrixContainer = document.querySelector('.matrix-effect');
+        
+        for (let i = 0; i < 20; i++) {
+          const column = document.createElement('div');
+          column.className = 'matrix-column';
+          column.style.left = Math.random() * 100 + '%';
+          column.style.animationDuration = (Math.random() * 5 + 15) + 's';
+          column.style.animationDelay = Math.random() * 2 + 's';
+          
+          for (let j = 0; j < 30; j++) {
+            const char = document.createElement('div');
+            char.textContent = String.fromCharCode(Math.floor(Math.random() * 93) + 33);
+            column.appendChild(char);
+          }
+          
+          matrixContainer.appendChild(column);
+        }
+      });
+      
+      // Menú móvil
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+          });
+        });
+      });
+      
+      // Typed.js para el texto animado
+      document.addEventListener('DOMContentLoaded', function() {
+        new Typed('#typed-intro', {
+          strings: ['Desarrollador Web', 'Full Stack', 'Diseñador UI/UX'],
+          typeSpeed: 80,
+          backSpeed: 60,
+          loop: true,
+          backDelay: 1500
+        });
+      });
+      
+      // Contador animado
+      document.addEventListener('DOMContentLoaded', function() {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        
+        const isElementInViewport = (el) => {
+          const rect = el.getBoundingClientRect();
+          return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+        };
+        
+        const animateCounters = () => {
+          counters.forEach(counter => {
+            if (isElementInViewport(counter) && !counter.classList.contains('counted')) {
+              counter.classList.add('counted');
+              const target = +counter.getAttribute('data-target');
+              const count = +counter.innerText;
+              const increment = target / speed;
+              
+              if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(() => animateCounters(), 1);
+              } else {
+                counter.innerText = target;
+              }
+            }
+          });
+        };
+        
+        window.addEventListener('scroll', animateCounters);
+        animateCounters(); // Iniciar animación al cargar
+      });
+      
+      // Animaciones con GSAP y ScrollTrigger
+      document.addEventListener('DOMContentLoaded', function() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animación para secciones
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+          gsap.fromTo(
+            section.querySelector('h2'),
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+              }
+            }
+          );
+        });
+        
+        // Animación para tarjetas de proyecto
+        gsap.utils.toArray('.project-card').forEach(card => {
+          gsap.fromTo(
+            card,
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 90%',
+                toggleActions: 'play none none none'
+              }
+            }
+          );
+        });
+        
+        // Animación para las habilidades
+        gsap.utils.toArray('.tech-stack').forEach((skill, i) => {
+          gsap.fromTo(
+            skill,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.5,
+              delay: i * 0.1,
+              scrollTrigger: {
+                trigger: '#habilidades',
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+              }
+            }
+          );
+        });
+      });
+      
+      // Botón de subir
+      document.addEventListener('DOMContentLoaded', function() {
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 300) {
+            backToTop.classList.remove('opacity-0', 'invisible');
+            backToTop.classList.add('opacity-100', 'visible');
+          } else {
+            backToTop.classList.remove('opacity-100', 'visible');
+            backToTop.classList.add('opacity-0', 'invisible');
+          }
+        });
+        
+        backToTop.addEventListener('click', function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      });
+      
+      // Efecto de hover para las tarjetas con VanillaTilt
+      document.addEventListener('DOMContentLoaded', function() {
+        VanillaTilt.init(document.querySelectorAll('.project-card'), {
+          max: 10,
+          speed: 400,
+          glare: true,
+          'max-glare': 0.3,
+          scale: 1.05
+        });
+      });
+      
+      // Formulario de contacto
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contact-form');
+        
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Aquí iría la lógica para enviar el formulario
+          // Por ahora, simularemos una respuesta exitosa
+          
+          const submitButton = form.querySelector('button[type="submit"]');
+          const originalText = submitButton.innerHTML;
+          
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Enviando...';
+          
+          setTimeout(() => {
+            alert('¡Mensaje enviado con éxito! Te responderé lo antes posible.');
+            form.reset();
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalText;
+          }, 2000);
+        });
+      });
+      
+      // Three.js para efectos 3D (simplificado para este ejemplo)
+      document.addEventListener('DOMContentLoaded', function() {
+        // Aquí podríamos añadir efectos 3D con Three.js
+        // Este es un placeholder para implementación futura
+      });
+      
+      // Smooth scrolling para los enlaces de navegación
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('nav a, .mobile-menu a');
+        
+        links.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            window.scrollTo({
+              top: targetElement.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          });
+        });
+      });
+    </script>
